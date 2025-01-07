@@ -8,20 +8,20 @@
   </head>
   <body>
     <div class="container">
-      <div class="title-container">
-        <h1>Hand Sign Controlling System</h1>
-        <div class="subtitle">Powered by HiveMQ Edge Processing</div>
+      <h1>Hand Sign Controlling System</h1>
+      <div class="two-columns">
+        <div class="camera-section">
+          <video id="video" autoplay playsinline></video>
+          <br />
+          <button id="capture">Capture Gesture</button>
+          <div id="status">Status: Initializing...</div>
+        </div>
+        <div class="switch-section">
+          <canvas id="switchCanvas"></canvas>
+        </div>
       </div>
-
-      <div class="video-container">
-        <video id="video" autoplay></video>
-      </div>
-
-      <button id="capture">Capture Gesture</button>
-      <div id="status">Status: Initializing...</div>
-      <canvas id="switchCanvas"></canvas>
-      <canvas id="canvas" style="display: none;"></canvas>
     </div>
+
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="script.js"></script>
   </body>
