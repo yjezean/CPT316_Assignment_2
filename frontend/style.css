@@ -18,13 +18,31 @@
 }
 
 body {
-  background: #1a1a1a;
-  color: white;
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
+  font-family: Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden; /* Prevent horizontal scroll from blur */
 }
 
+/* Add a blurred background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("./assets/background.png") no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(3px); /* Adjust blur amount as needed */
+  z-index: -1;
+  transform: scale(1.1); /* Prevent blur edges */
+}
+
+/* Ensure content stays above blurred background */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -51,6 +69,13 @@ body {
   align-items: center;
   position: relative;
   width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .switch-section {
@@ -64,38 +89,37 @@ body {
 #video {
   width: 100%;
   max-width: 640px;
-  margin: 20px auto;
+  margin: 20px auto 10px auto;
   display: block;
   background: #000;
-  border-radius: 8px;
-  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 #capture {
-  background: #4caf50;
+  background: linear-gradient(135deg, #4caf50, #45a049);
   color: white;
   border: none;
-  padding: 16px 36px;
-  border-radius: 12px;
+  padding: 15px 40px;
+  border-radius: 30px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
-  margin: 20px 0;
+  margin: 10px 0;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
-  width: 50%;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 #capture:hover {
-  background: #45a049;
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
 #capture:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(1px);
 }
 
 #capture:disabled {
@@ -107,8 +131,17 @@ body {
 
 #status {
   margin: 10px 0;
-  color: #aaa;
-  font-size: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px 25px;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: 500;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 #switchCanvas {
@@ -150,4 +183,42 @@ body {
 .loading-gif {
   width: 200px;
   height: auto;
+}
+
+/* Update title styles */
+h1 {
+  font-size: 2.8em;
+  font-weight: 700;
+  text-align: center;
+  margin: 0px 0 5px 0;
+  padding: 20px 40px;
+  color: rgb(61, 56, 56);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  letter-spacing: 2px;
+}
+
+/* Add hover effect */
+h1:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Add media query for responsive font size */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2em;
+    margin: 30px 0 40px 0;
+  }
+}
+
+/* Update br spacing */
+.camera-section br {
+  display: none;
 }
