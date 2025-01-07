@@ -2,8 +2,6 @@
 const video = document.getElementById("video");
 const captureButton = document.getElementById("capture");
 const statusDiv = document.getElementById("status");
-const switchCanvas = document.getElementById("switchCanvas");
-const switchCtx = switchCanvas.getContext("2d");
 
 // Initialize webcam
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -98,6 +96,8 @@ client.subscribe("hand/gesture/result", { qos: 1 });
 // Add at the top with other initializations
 const switchSound = new Audio("./assets/switch.mp3");
 switchSound.volume = 0.5; // Set volume to 50%
+const switchImage = document.getElementById("switchImage");
+let switchState = "OFF";
 
 // Handle incoming messages
 client.on("message", (topic, message) => {
@@ -109,105 +109,24 @@ client.on("message", (topic, message) => {
     const result = message.toString();
     console.log("Received result:", result);
 
+    // Handle switch state
     if (result.includes("UP") || result.includes("THUMBS_UP")) {
-      switchState = "ON";
-      drawSwitch("ON");
-      playSound();
+      if (switchState !== "ON") {
+        switchState = "ON";
+        switchImage.src = "./assets/ON.png";
+        playSound();
+      }
     } else if (result.includes("DOWN") || result.includes("THUMBS_DOWN")) {
-      switchState = "OFF";
-      drawSwitch("OFF");
-      playSound();
+      if (switchState !== "OFF") {
+        switchState = "OFF";
+        switchImage.src = "./assets/OFF.png";
+        playSound();
+      }
     }
 
     statusDiv.textContent = `Detected: ${result} 🤚`;
   }
 });
-
-// Initialize switch canvas
-switchCanvas.width = 180;
-switchCanvas.height = 480;
-
-// Initialize switch state
-let switchState = "OFF";
-
-// Draw initial switch state
-drawSwitch("OFF");
-
-function drawSwitch(state) {
-  const ctx = switchCtx;
-  const width = switchCanvas.width;
-  const height = switchCanvas.height;
-
-  // Clear canvas
-  ctx.clearRect(0, 0, width, height);
-
-  // Draw background
-  ctx.fillStyle = "#2c2c2c";
-  ctx.fillRect(0, 0, width, height);
-
-  // Draw switch track
-  ctx.fillStyle = "#1a1a1a";
-  ctx.fillRect(20, 20, width - 40, height - 40);
-
-  // Draw switch handle with color based on state
-  const handleHeight = 100;
-  const handleY = state === "ON" ? 40 : height - handleHeight - 40;
-
-  // Set handle color based on state
-  ctx.fillStyle = state === "ON" ? "#4CAF50" : "#ff4444"; // Green for ON, Red for OFF
-  if (state === "ON") {
-    ctx.fillRect(30, handleY - 15, width - 60, handleHeight);
-  } else if (state === "OFF") {
-    ctx.fillRect(30, handleY + 15, width - 60, handleHeight);
-  }
-
-  // Add a subtle gradient to the handle
-  const gradient = ctx.createLinearGradient(
-    0,
-    handleY,
-    0,
-    handleY + handleHeight
-  );
-  gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
-  gradient.addColorStop(1, "rgba(0, 0, 0, 0.1)");
-  ctx.fillStyle = gradient;
-
-  if (state === "ON") {
-    ctx.fillRect(30, handleY - 15, width - 60, handleHeight);
-  } else if (state === "OFF") {
-    ctx.fillRect(30, handleY + 15, width - 60, handleHeight);
-  }
-
-  // Draw text with improved visibility
-  // ON text
-  ctx.fillStyle = state === "ON" ? "#FFFFFF" : "#666666";
-  ctx.font = "bold 24px Arial"; // Increased font size and made bold
-  ctx.textAlign = "center";
-  ctx.fillText("ON", width / 2, 80);
-
-  // Add text shadow for better contrast
-  if (state === "ON") {
-    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-    ctx.shadowBlur = 4;
-    ctx.fillText("ON", width / 2, 80);
-    ctx.shadowBlur = 0;
-  }
-
-  // OFF text
-  ctx.fillStyle = state === "OFF" ? "#FFFFFF" : "#666666";
-  ctx.font = "bold 24px Arial"; // Increased font size and made bold
-  ctx.textAlign = "center";
-
-  // Add text shadow for better contrast
-  if (state === "OFF") {
-    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-    ctx.shadowBlur = 4;
-    ctx.fillText("OFF", width / 2, height - 60);
-    ctx.shadowBlur = 0;
-  } else {
-    ctx.fillText("OFF", width / 2, height - 60);
-  }
-}
 
 // Add sound function
 function playSound() {

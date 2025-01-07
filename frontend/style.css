@@ -76,14 +76,12 @@ body::before {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.switch-section {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 20px;
+.camera-section:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #video {
@@ -142,11 +140,6 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-}
-
-#switchCanvas {
-  margin: 20px auto;
-  display: block;
 }
 
 /* Make it responsive */
@@ -221,4 +214,48 @@ h1:hover {
 /* Update br spacing */
 .camera-section br {
   display: none;
+}
+
+.switch-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.image-switch {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.image-switch img {
+  width: 550px;
+  height: auto;
+  display: block;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+}
+
+.image-switch:hover {
+  transform: translateY(-5px);
+}
+
+/* Ensure responsive behavior */
+@media (max-width: 1024px) {
+  .image-switch img {
+    width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-switch img {
+    width: 350px;
+  }
 }
