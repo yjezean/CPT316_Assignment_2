@@ -133,7 +133,11 @@ function drawSwitch(state) {
 
   // Set handle color based on state
   ctx.fillStyle = state === "ON" ? "#4CAF50" : "#ff4444"; // Green for ON, Red for OFF
-  ctx.fillRect(30, handleY, width - 60, handleHeight);
+  if (state === "ON") {
+    ctx.fillRect(30, handleY - 15, width - 60, handleHeight);
+  } else if (state === "OFF") {
+    ctx.fillRect(30, handleY + 15, width - 60, handleHeight);
+  }
 
   // Add a subtle gradient to the handle
   const gradient = ctx.createLinearGradient(
@@ -145,20 +149,25 @@ function drawSwitch(state) {
   gradient.addColorStop(0, "rgba(255, 255, 255, 0.2)");
   gradient.addColorStop(1, "rgba(0, 0, 0, 0.1)");
   ctx.fillStyle = gradient;
-  ctx.fillRect(30, handleY, width - 60, handleHeight);
+
+  if (state === "ON") {
+    ctx.fillRect(30, handleY - 15, width - 60, handleHeight);
+  } else if (state === "OFF") {
+    ctx.fillRect(30, handleY + 15, width - 60, handleHeight);
+  }
 
   // Draw text with improved visibility
   // ON text
   ctx.fillStyle = state === "ON" ? "#FFFFFF" : "#666666";
   ctx.font = "bold 24px Arial"; // Increased font size and made bold
   ctx.textAlign = "center";
-  ctx.fillText("ON", width / 2, 50);
+  ctx.fillText("ON", width / 2, 80);
 
   // Add text shadow for better contrast
   if (state === "ON") {
     ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
     ctx.shadowBlur = 4;
-    ctx.fillText("ON", width / 2, 50);
+    ctx.fillText("ON", width / 2, 80);
     ctx.shadowBlur = 0;
   }
 
@@ -171,9 +180,9 @@ function drawSwitch(state) {
   if (state === "OFF") {
     ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
     ctx.shadowBlur = 4;
-    ctx.fillText("OFF", width / 2, height - 30);
+    ctx.fillText("OFF", width / 2, height - 60);
     ctx.shadowBlur = 0;
   } else {
-    ctx.fillText("OFF", width / 2, height - 30);
+    ctx.fillText("OFF", width / 2, height - 60);
   }
 }
