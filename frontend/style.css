@@ -75,20 +75,40 @@ body {
   background: #4caf50;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 16px 36px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 16px;
-  margin: 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+  width: 50%;
 }
 
 #capture:hover {
   background: #45a049;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#capture:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#capture:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 #status {
   margin: 10px 0;
   color: #aaa;
+  font-size: 20px;
 }
 
 #switchCanvas {
