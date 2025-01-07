@@ -50,12 +50,19 @@ client.on("close", () => {
   statusDiv.textContent = "MQTT Disconnected ❌";
 });
 
-// Capture button event listener
+// Add loading element reference
+const loadingContainer = document.getElementById("loadingContainer");
+
+// Update capture button event listener
 captureButton.addEventListener("click", () => {
   try {
     if (video.readyState !== video.HAVE_ENOUGH_DATA) {
       throw new Error("Video not ready");
     }
+
+    // Show loading
+    loadingContainer.classList.add("active");
+    captureButton.disabled = true;
 
     const context = captureCanvas.getContext("2d");
     captureCanvas.width = video.videoWidth;
@@ -69,32 +76,47 @@ captureButton.addEventListener("click", () => {
       if (error) {
         console.error("Publish error:", error);
         statusDiv.textContent = "Send failed ❌";
+        loadingContainer.classList.remove("active");
+        captureButton.disabled = false;
       } else {
         console.log("Image sent successfully");
         statusDiv.textContent = "Image sent ✅";
+        // Don't hide loading yet - wait for result
       }
     });
   } catch (error) {
     console.error("Error capturing/sending image:", error);
     statusDiv.textContent = "Capture error ❌";
+    loadingContainer.classList.remove("active");
+    captureButton.disabled = false;
   }
 });
 
 // Subscribe to results
 client.subscribe("hand/gesture/result", { qos: 1 });
 
+// Add at the top with other initializations
+const switchSound = new Audio("./assets/switch.mp3");
+switchSound.volume = 0.5; // Set volume to 50%
+
 // Handle incoming messages
 client.on("message", (topic, message) => {
   if (topic === "hand/gesture/result") {
+    // Hide loading
+    loadingContainer.classList.remove("active");
+    captureButton.disabled = false;
+
     const result = message.toString();
     console.log("Received result:", result);
 
     if (result.includes("UP") || result.includes("THUMBS_UP")) {
       switchState = "ON";
       drawSwitch("ON");
+      playSound();
     } else if (result.includes("DOWN") || result.includes("THUMBS_DOWN")) {
       switchState = "OFF";
       drawSwitch("OFF");
+      playSound();
     }
 
     statusDiv.textContent = `Detected: ${result} 🤚`;
@@ -184,5 +206,15 @@ function drawSwitch(state) {
     ctx.shadowBlur = 0;
   } else {
     ctx.fillText("OFF", width / 2, height - 60);
+  }
+}
+
+// Add sound function
+function playSound() {
+  try {
+    switchSound.currentTime = 0; // Reset sound to start
+    switchSound.play().catch(console.error);
+  } catch (error) {
+    console.error("Sound play error:", error);
   }
 }
