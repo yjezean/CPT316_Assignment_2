@@ -10,19 +10,27 @@ hand-gesture-project/
 
 ## Setup
 
-1. Install Python requirements:
+1. Create and activate a Python virtual environment:
 bash
+Create virtual environment
 python -m venv venv
-source venv/bin/activate # On Windows: venv\Scripts\activate
-pip install -r backend/requirements.txt
+Activate virtual environment
+On Windows:
+venv\Scripts\activate
+On Unix/MacOS:
+source venv/bin/activate
+
+2. Install Python requirements:
+pip install -r .\backend\requirements.txt
 
 
-2. Run the backend:
+3. Run the backend:
 bash
-python gesture_recognition.py
+python backend/gesture_recognition.py
 
-3. Open the frontend in your browser, with LiveServer:
-http://localhost:3000
+4. Open the frontend:
+- Use LiveServer in VS Code or any web server
+- Access via: http://localhost:3000
 
 ## Usage
 1. Allow camera access in browser
