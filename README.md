@@ -5,11 +5,17 @@
 hand-gesture-project/
 
 ├── frontend/
+
 │ ├── index.html
+
 │ ├── style.css
+
 │ └── script.js
+
 └── backend/
+
 ├── gesture_recognition.py
+
 └── requirements.txt
 
 ## Setup
