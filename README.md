@@ -5,21 +5,12 @@
 hand-gesture-project/
 
 ├── frontend/
-
 │ ├── index.html
-
 │ ├── style.css
-
 │ └── script.js
-
-│
-
 └── backend/
-
 ├── gesture_recognition.py
-
 └── requirements.txt
-
 
 ## Setup
 
@@ -41,7 +32,6 @@ source venv/bin/activate
 
 pip install -r .\backend\requirements.txt
 
-
 3. Run the backend:
 
 bash
@@ -53,6 +43,7 @@ python backend/gesture_recognition.py
 - Access via: http://localhost:3000
 
 ## Usage
+
 1. Allow camera access in browser
 2. Make hand gestures:
    - Thumbs Up: Switch ON
@@ -60,6 +51,7 @@ python backend/gesture_recognition.py
 3. Click "Capture Gesture" to process
 
 ## Technologies Used
+
 - MediaPipe for hand gesture recognition
 - HiveMQ for MQTT communication
 - HTML5/CSS3/JavaScript for frontend
